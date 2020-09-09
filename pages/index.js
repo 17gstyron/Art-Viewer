@@ -67,23 +67,18 @@ export default function Home(props) {
     }
   }
 
+  // Renders the next and previous images of the current image being viewed
   function loadNextImages(currentIndex) {
-    // TODO render images that are directly before and after the current image being viewed
-    // Return two rendered images
     if (typeof window !== "undefined") {
-      console.log("rendering...");
       const indexOfElementsToRender = [currentIndex - 1, currentIndex + 1];
       const renderedImages = indexOfElementsToRender.forEach((index) => {
         if (index < 0 || index > images.length - 1) {
-          console.log("nothing to render here");
         } else {
-          console.log("rendering image...");
           const img = new Image();
           img.src = images[index].urls.raw; // by setting an src, you trigger browser download
 
           img.onload = () => {
             // when it finishes loading, update the component state
-            console.log(`Succesfully loaded Image at index: ${index}`);
           };
         }
       });
