@@ -21,9 +21,9 @@ export default function Home(props) {
   useEffect(() => {
     if (images[0]) {
       setImage(images[imageIndex].urls.raw);
+      loadNextImages(images);
     }
     if (typeof window !== "undefined") {
-      // Handler to call on window resize
       function handleResize() {
         setWindowSize({
           width: window.innerWidth,
@@ -68,22 +68,19 @@ export default function Home(props) {
   }
 
   // Renders the next and previous images of the current image being viewed
-  // function loadNextImages(currentIndex) {
-  //   if (typeof window !== "undefined") {
-  //     const indexOfElementsToRender = [currentIndex - 1, currentIndex + 1];
-  //     const renderedImages = indexOfElementsToRender.forEach((index) => {
-  //       if (index < 0 || index > images.length - 1) {
-  //       } else {
-  //         const img = new Image();
-  //         img.src = images[index].urls.raw; // by setting an src, you trigger browser download
+  function loadNextImages(images) {
+    if (typeof window !== "undefined") {
+      images.forEach((image) => {
+        new Promise(function (resolve, reject) {
+          const img = new Image();
 
-  //         img.onload = () => {
-  //           // when it finishes loading, update the component state
-  //         };
-  //       }
-  //     });
-  //   }
-  // }
+          img.src = image.urls.raw;
+          img.onload = resolve();
+          img.onerror = reject();
+        });
+      });
+    }
+  }
 
   return (
     <div
