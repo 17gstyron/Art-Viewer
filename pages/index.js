@@ -44,15 +44,15 @@ export default function Home(props) {
     }
   }
 
-  async function search() {
-    await unsplash.search
+  function search() {
+    unsplash.search
       .photos(searchBarValue, 1, 100, {})
       .then(toJson)
       .then((res) => {
         setImages(res.results);
+        setImageIndex(0);
         setImage(res.results[0].urls.raw);
       });
-    setImageIndex(0);
   }
 
   function traverseImageArray(direction) {
